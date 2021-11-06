@@ -1,0 +1,31 @@
+{
+    "version": "8.0",
+    "build_revision": "0914ec1",
+    "relays_published": "2021-11-06 07:00:00",
+    "relays": [
+        {
+            "n": "seele",
+            "f": "000A10D43011EA4928A35F610405F92B4433B4DC",
+            "ip": "127.0.1.1",
+            "port": "8080",
+            "Public_key_file": "" 
+        },
+        {
+            "n": "CalyxInstitute14",
+            "f": "0011BD2485AD45D984EC4159C88FC066E5E3300E",
+            "ip": "98.45.181.220",
+            "p": "8080",
+            "Public_key_file": "public_key.pem"
+        },
+        {
+            "n": "Honorem",
+            "f": "0022C7399DE3E5C8F6B74CE2A28399D52726485F",
+            "ip": "98.45.181.220",
+            "p": "8080"
+        }
+    ],
+    "relays_truncated": 7404,
+    "bridges_published": "2021-11-06 06:50:54",
+    "bridges": [],
+    "bridges_truncated": 1473
+}

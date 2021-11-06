@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <version>8.0</version>
+  <build_revision>0914ec1</build_revision>
+  <relays_published>2021-11-06 07:00:00</relays_published>
+  <relays>
+    <name>seele</name>
+    <fingerprint>000A10D43011EA4928A35F610405F92B4433B4DC</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8081</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAujtpuJabrNwWyhiKhH09
+5YQzbI97Eq5lf49SPtJJnRX1HsnYb1oIxaCxXGuHW4n3yQV7cGBMMZkDKI5u8Xys
+GouiR75ZCwZOYDFYFHeUOgOCwTbWcwXN/nNE2SxfrfDR0xywk4rK9CPRiI1zQWJO
+YWKCv5uIwrBur/0TVkbHDptyPMFDNXkmd/x4DGPKXdKK2iqpVhbnOk32z71F4tJf
+HcAmxgAp1nlcfxEcyjMsKFtZ5nXfBLtxajriGiRX526I+xLM+JB58fm2AcTJCIve
+LAw9oe1AWu+SDXe4vBuu1zRify5Hgd9jw3LdPJsWkuXpZN4gg+LZOsSQBkFWgUdC
++X1EonrmxlsM7T4PSMjVhis71OQmLhzxgv5xis1yDYAEMcO2UrEn5Mwpe7uS+hBl
+FCdq+RK5fLwJxBLsYvtCXaUZbcENTyEAnhV5/hGHw2RCz7WJLaRZ3GJEv/esNSeX
+hltUu41/irn/t/kWMCZjyCpjVgiWBAr4aa6+P2fQIUlDvUflYIwCIuFZ4D54Q4/C
+hTMS8U/26zc6OHErTFuUgv1Gs4nrmi/qskDCMAVbzco0JllK/brvCwU1NerdIb6Y
+mkHdUr6cl7I0zgDG4Tdt/DJrAI6mqJmYS43cH2N654WJv7ZUefX/fMLtpJCdXEph
+OtULsaWseCoEq7747eZ9d5UCAwEAAQ==
+-----END PUBLIC KEY-----
+    </Public_key>
+  </relays>
+  <relays>
+    <name>CalyxInstitute14</name>
+    <fingerprint>0011BD2485AD45D984EC4159C88FC066E5E3300E</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8082</port>
+    <Public_key>-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsfE/wYul+mrNMqzXNwJC
+Hk9EsLTh2ZCqbaTofJpmYDQ+Z9g/noBA17GKkK81Iws9trqv8Mey9nQMHkVy6dfS
+J8g7qFUNzuRsl0k65VWIRY7jAfkK7zy8ReUJoAmXsvzHSLyGJOCR4/BHPeGcyZtd
+tuvTLM9jkUh5rgS8MpjGgBlHwa2QF2OA0SmaVeGTqBGGnR4NucDa7/1vtK0V6YS3
+MOw2wXN6fAZO9nAHI5R1KuP2qM5o3n29g3MGXrG9PnNl8OlrD7hFeg7kuLceELHM
+8tQb8j5Ra9iX0d/pGn/OKdx9UuQaR35508/W0g1eda3bIUAub7PWEclIAX3UpdVv
+vv2GNL++fuH/E74c6Q8WpXqyxKaLw5vQ5QnwaHHziLfqkiFl8V8peByUVte/YFwL
+bkcVonhtvT9L8k5NrIXZymWWCFEZsmbucyIBfJWELki8F4GqrJtthW38a1GK9maJ
+TdGNwFxntL6U0oJOQWPw+X7B60zU8Ogau5YIEGMOJnUXxpzwIkPZujqSVbyt5gC2
+9QwhHtg9qVkmKzEIHW3Jhi13J7YajIdMxv5+BmbD8lTc215QJZaMcU3quzh2I8+u
+Q6XIZju1Ox4LsdpiOQ00rWh2YlRZ0Pnpbo8cYE2sGVTLq0zNb0KkhqHUb2dLdY+Q
+WSzxSNYmi1UBUhOvWvxDjR0CAwEAAQ==
+-----END PUBLIC KEY-----</Public_key>
+  </relays>
+  <relays>
+    <name>Honorem</name>
+    <fingerprint>0022C7399DE3E5C8F6B74CE2A28399D52726485F</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8083</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0GlNJ1AsBJ6ICKem7PNl
+u4iukdkPMWKMK21cKt4BUedxlPX3z4GRj1EUN+YO9JIEyK4vkbNGnMZF8EtAnNV7
+daA6xu9RgOCJUmZZjPl7Zv1DqTNDGCB/duuRIo+XkPNS9EWr0nGm00JQ41+MLCoI
+SqHdenP/lP4QblsInnQKTI8jXqAmS/bqSX9ffuYQ+AwKGE3wpw/Jo+Mh7sqV8Am9
+lltrZ8sKe6qGRD4hnLacNoAnOJU7mlczJMDdFyasHwW3HvXJtVtjwDlN0s/BFgh6
+qSKrf+0Vla0POT2LohOa4VN3hO1JOl3xt/zI5/OcYZwzcona/CurDeh8Ib8WJOsR
+cgkCr3gsIGjc6N5Nd3IaVZx80BRVNXTCl4p7XXHM9q0a1JsbmFcTbOAI2z8+BggI
+0PxkfoY+dOnnhmUWZVPYmjjpbMsh14CBZNzIJW0TRgSf0kp8RJOC+oaDVhvu6ZNm
+IKRldPCcChuCpOEgCBeViYdsETjPh+z+8UUytcnnXNf37e5EeMI0oq7QTIILroaC
+Yoi2ypTgI/HozXzw+J2TTros8caKQB6JV5CR6aYZUS6R0JzuUTlnmRQSBc6ipE1o
+Vn/jjRjt+JNuuUiFk8GP1b0h74kxR8rWYAkrasUR/TJFIsuklrkDBoOiY7G79X69
+QRwuTU2pGHWQfOYRqJfZTqMCAwEAAQ==
+-----END PUBLIC KEY-----
+  </Public_key>
+  </relays>
+  <relays_truncated>7404</relays_truncated>
+  <bridges_published>2021-11-06 06:50:54</bridges_published>
+  <bridges/>
+  <bridges_truncated>1473</bridges_truncated>
+</root>

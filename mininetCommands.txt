@@ -1,0 +1,49 @@
+fuser -n tcp -k 6633
+Remove cache and flows
+----------------------
+h1 ip -s -s neigh flush all
+h2 ip -s -s neigh flush all
+h3 ip -s -s neigh flush all
+sudo ovs-ofctl del-flows s1
+
+
+create network with single topology
+------------------------------------
+sudo mn --topo single,3 --mac --switch ovsk --controller remote
+sudo mn --topo single,3 --controller remote --switch user
+sudo mn --custom routerExercise_Topo.py --topo mytopo --mac --controller remote,port=6633
+sudo mn --topo single,3 --mac --switch ovsk --controller remote,port=6633
+
+
+
+Mininet useful commands
+-----------------------
+nodes
+help
+h1 ifconfig
+links
+
+
+
+Openflow switch commands
+-------------------------
+sudo ovs-ofctl show s1
+sudo ovs-ofctl dump-flows s1
+
+
+ovs-ofctl add-flow s1 in_port=1,actions=output:2
+ovs-ofctl add-flow s1 in_port=2,actions=output:1
+
+sudo ovs-ofctl del-flows s1
+
+
+Host commands
+-------------------
+h1 ping -c3 h2
+h1 ip -s -s neigh flush all
+tcpdump -XX -n -i h2-eth0
+
+Pox commands
+-----------------------
+./pox.py log.level --DEBUG samples.pretty_log forwarding.l2_learning 
+./pox.py log.level --DEBUG samples.pretty_log misc.of_tutorial
