@@ -84,9 +84,7 @@ class TorSession:
     def EstablishKeys(self, relayList):
         # returns JSON object as
         # a dictionary
-        currentRelayNodes = []
-        for i, relay in enumerate(relayList):
-            currentRelayNodes.append(relay)
+        for i in range(len(relayList)):
             #relay.Uid = os.urandom(16)
             dh_private_key = Crypto.SymmetricCrypto.GeneratePrivateKey(self.parameters)
             dh_public_key_serial = Crypto.RSACryptography.SerializePublicKey(dh_private_key.public_key())
@@ -96,7 +94,7 @@ class TorSession:
             parameters["p"] = generatedParameters.p
             parameters["g"] = generatedParameters.g
             message = { "GenPublicKey" : dh_public_key_serial}
-            preparedPacket = self.PrepareForwardingPacket(currentRelayNodes, message, Tor.TorActions.EstablishSymKey)
+            preparedPacket = self.PrepareForwardingPacket(self.Relays[:i + 1], message, Tor.TorActions.EstablishSymKey)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 HOST = relayList[0].ip
                 PORT = int(relayList[0].port)
@@ -105,8 +103,8 @@ class TorSession:
                 dataRecv = recvall(s)
                 if not dataRecv:
                     raise Exception("Error establishing Symmetric Keys")
-                if(i > 0):
-                    dataRecv = Crypto.SymmetricCrypto.Decrypt(relayList[0].UId, dataRecv, relayList[0].SymmKey)
+                for j in range(i):
+                    dataRecv = Crypto.SymmetricCrypto.Decrypt(self.Relays[j].UId, dataRecv, self.Relays[j].SymmKey)
                 packet = pickle.loads(dataRecv)
             server_pub_key_Serial = packet.Payload["PublicKey"]
             server_pub_key = serialization.load_pem_public_key(
@@ -125,8 +123,8 @@ class TorSession:
 
             #derived_key = packet.Payload["Test"]
 
-            relay.SymmKey = derived_key
-            relay.UId = packet.Payload["UId"]#Crypto.SymmetricCrypto.Decrypt(packet.Payload["UId"], packet.Payload["Test"], relay.SymmKey)
+            self.Relays[i].SymmKey = derived_key
+            self.Relays[i].UId = packet.Payload["UId"]#Crypto.SymmetricCrypto.Decrypt(packet.Payload["UId"], packet.Payload["Test"], relay.SymmKey)
             
 
     
@@ -167,15 +165,16 @@ class TorSession:
                 dataRecv = Crypto.SymmetricCrypto.Decrypt(relay.UId, dataRecv, relay.SymmKey)
         return dataRecv
         
-
+print("Generating Identity and establishing Circuit")
 session = TorSession()
+print("Circuit Established")
 while True:
-    d1a = input ("Do you want to: \n1) Generate New Identity . \n2) Browse an url  \nQ) Quit: ")
+    d1a = input ("Do you want to: \n1) Generate New Identity . \n2) Browse an url  \nQ) Quit\n")
     if d1a == "1":
         session = TorSession()
     elif d1a == "2":
         url = input("Enter Url to browse : ")
-        session.Browse(url)
+        print(session.Browse(url))
     elif d1a.upper() == "Q":
         break
     else:

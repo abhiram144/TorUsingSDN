@@ -87,6 +87,7 @@ class TorServer:
             packet = pickle.loads(decrypted)
 
         if(packet.ReqType == Tor.TorActions.EstablishSymKey):
+            print("Negotiating Symmetric Key")
             decryptId = os.urandom(16)
             decrypted_payload = packet.Payload
             client_pubkey_serial = decrypted_payload["GenPublicKey"]
@@ -116,20 +117,27 @@ class TorServer:
             #encryptedData = Crypt.SymmetricCrypto.Encrypt(decryptId, b"Test", derived_key)
             packet = Tor.TorPacket(None, None, packet.SessionId)
             packet.Payload = {"PublicKey" : pem, "UId" : decryptId}
+            print("Key Negotiated")
             return pickle.dumps(packet)
-        
+
         
         elif(packet.ReqType == Tor.TorActions.Forward):
+            print("Relay packet received .... Processing")
             symmetric_key = self.SessionUidLookUps[packet.SessionId].Key
             nonce = self.SessionUidLookUps[packet.SessionId].UId
-            serial_payload = pickle.dumps({"Data" : packet.Payload, "SessionId" : packet.SessionId})
+            pay_load = {"Data" : packet.Payload, "SessionId" : packet.SessionId}
+            if('Parameters' in packetJson.keys()):
+                pay_load["Parameters"] = packetJson["Parameters"]
+            serial_payload = pickle.dumps(pay_load)
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as forward:
                     HOST = packet.Dst
                     PORT = int(packet.DstPort)
+                    print("Peeling Outer Layer and forwarding packet")
                     forward.connect((HOST, PORT))
                     forward.sendall(serial_payload)
                     dataRecv = recvall(forward)
+                print("data received Encrypting and sending back data")
                 encrypted_data = Crypt.SymmetricCrypto.Encrypt(nonce, dataRecv, symmetric_key)
                 return encrypted_data
             except Exception as e:
@@ -140,6 +148,7 @@ class TorServer:
             try:
                 # open a connection to a URL using urllib
                 url = packet.Payload["url"]
+                print("Got request to browse {url}")
                 webUrl  = urllib.request.urlopen(url)
 
                 #get the result code and print it
@@ -149,7 +158,7 @@ class TorServer:
                 # read the data from the URL and print it
                 dataRecv = webUrl.read()
                 encrypted_data = Crypt.SymmetricCrypto.Encrypt(nonce, dataRecv, symmetric_key)
-                return dataRecv
+                return encrypted_data
             except Exception as e:
                 print(e)
                 return b""

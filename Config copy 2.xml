@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <version>8.0</version>
+  <build_revision>0914ec1</build_revision>
+  <relays_published>2021-11-06 07:00:00</relays_published>
+  <relays>
+    <name>seele</name>
+    <fingerprint>000A10D43011EA4928A35F610405F92B4433B4DC</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8081</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIIDIjANBgkqhkiG9w0BAQEFAAOCAw8AMIIDCgKCAwEAqkawK6+/iqUrcUGm+mo/
+VIj8txdWLmq5JLon8kre3r6ZmHSCRhrkZ1IlsovFmeK0JKc8dOGvl59wPnFrOPAN
+QRh8awt6+Y3fDYAjKKy4YI2nLDH9+Nqr+/GlxnYtoi67Y3BhUbnnjSmTfZQYpXxs
+3OraUNlw0hi0ER/CZwKbLdwx9LzSV7Dq//Ct08N6oLLERtqFAA4V6f0D55tP0Aob
+VRdwzWsPINK9utgjtZa/wpyuFDXRodVKujkhNykwyVFd4EqT9D3OMGin6vvWQh6w
+xCC+t+HCcpk+6yHSi6DZ2db41ey6MaamhOl0kMZf534jvbepQEwv6I964BcSCWGP
+nwhUZXEi4Kbjpt9o5qiVqddW5lP4YA/dB/dWIfN8VKaErp1ANMN/xnXbXcbfiiQF
+WNwoBRLerqjEktD6GzcF+8xD9w0zVqVN+fPMbrzsSyd95+Rhhvpwxaw9ZkzEnRtP
+sXQ11Jh/qi6hx1OWpAiESOWs4INUlZOJE69/ol+A7liqb6oSTKa+Nh1FtzoSaSyI
+N+vrsvLuzI+L1g6iotcFa/DoKV6gWafXFmljea4kfEtJynmjZluKEz36TJSxBCGd
+m78NRFoALUZU3dCQBXSZoLxXKR0PQd4WdGm/yX9/CAYz3f/v0qdGoBDTPv2ktvI+
+rqLJhUbzARj9VnJMQHmwjX7BLmOBgq+psWrPxXTWwsT7Qdk26dPqBlyJJrd+Oq3s
+1p07HhrZT6K1/hKS0ejmebxZgwr/Ow2Xi1Oj5OmhHLYoLv4MupB9YCZfXKwPBH83
+lqZNKbSKrULXdBZkeJKD8dkpjVDxy6IwulS5MivRHHROLbeESr+6ZJVMG9pjDzKH
+i/hlSTuqVVYigjBmJmQICSaW7DHZo6fNlGQF9cDMYo6vkdgx6BkOcGo+4ZOVVf2j
+VB+JmbRD3E09vY1oVfjzwzbn0q3ZVDmoA/LirVKAxWGIJ9yFWsMFJS6VE2uQ7vKF
+jdSs0k1lN4IiK5sMZeaYIKlCnusVga0KgsgWkfXnib3jAgMBAAE=
+-----END PUBLIC KEY-----
+    </Public_key>
+  </relays>
+  <relays>
+    <name>CalyxInstitute14</name>
+    <fingerprint>0011BD2485AD45D984EC4159C88FC066E5E3300E</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8082</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIIDIjANBgkqhkiG9w0BAQEFAAOCAw8AMIIDCgKCAwEA0AhkTTFQqzaQOMFVs5T+
+xV9ireDVtfsISqkL4VF0/tPWOJDSK+txs4Qs5GOABIK30R+DvXkZUR7f9T9Ly18c
+tZctAsb5UJERWNN1USr4EGhJlLAhwciZbc+s2j641P2PauqfBL5g0SB6HJ1OF6QU
+3iCoc9RLNQfkx6o50k1b34trwZqnKdTzm/5snx53WjE7Dfzhp40CYunndp9kznt/
+3usQhTA9vNjsWpmMlp1BU0Mj9j+76jylk8IP521wAlZmZ5QYwG4u0zAKvS8BEeSl
+QC/QidnApGTCJh+GoSwIqL3v1tHyzu+UNeewNVGvb89zKsIYP2Ai9F5rXALmeOwN
+5WS7stA0h+qijRdjnUH9aKS3C+H4PIbDsgemSutQT0sSgMDt9ZT4s39vYU3n/wSP
+ZFLcUvWb/fktQOyAmxb5GK2Z3J1y8I4+R9QsMuKC9F4rLdfInlFJJzjABI3Y4/0U
+2IO6F0NAidZXI3n2Sh6Kg+Mq4SIYdaGkQXYUZrnnhagpvBaLls6Bvv9bTtIC3Xjp
+SStvGObJ8fD65kY86Q73t1+OaBEUx4P7HlBSKgKeCmYMho5AodJ+SBlrAxphGZXd
+Db+ugU2fE+s+fFQyB/thv9HzDN7q3MfU1Edd6wVsnmg63qozFW/TOiI1aD/dRXy2
+218LRQccFXm3C+hOaAXedu41SPvNCddX3dxE2k4NmDT1BFpH8NiIxCBdNVMKmIg9
+g9Gefkf9tgERLZZqGwBNDxoLiJB7tG/e2aHJuuVKE04LFQ28CExK5kFhQN6MV2QE
+dJCUhFfOxjZOOIBhNGZTCjh/LvQOt9ieyf9VvKKOJa1MycrRYvHBeAVK6I1A+zjC
+MQcBpCCPEr/OgvLjPAchXRAom5k0dpOYjTvO8piY/Cim/7VmRhw9nD5gLfW6Lmuf
+iXH7YrT/SN+po/O8MhjuxUUqM8U6Rvwk9qIj00YyxxD9NqPSevxkTLbyjMxOxIno
++sXdCLgzkaCnvlJ2E2591Gz8HvuxF74YquM58bykehYLAgMBAAE=
+-----END PUBLIC KEY-----
+</Public_key>
+  </relays>
+  
+    <relays>
+    <name>CalyxInstitute14</name>
+    <fingerprint>0011BD2485AD45D984EC4159C88FC066E5E3300E</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8083</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIIDIjANBgkqhkiG9w0BAQEFAAOCAw8AMIIDCgKCAwEAq3rmFNVcQLeT7MhOTIx3
+jlyodhg9xJtzEnlEfxvi7JL06sQBzByXVeGt9URV6fJE7SYKQ9UcaC25xZpGLZoL
+gH9hdomxmCyuDpVgK4zA6MUrwvG8DChb/lyjmDmNsutL9Xpn6KGc388LVeStf+KW
+7j+lzTY/C/u2aAYCphwxfmK+Ak9PsT7TQZ7pjfN+kPYz4amzh0M4c2CpsUxHWmXx
+qs9KnTB0hayVSYBB7dIM6Ts2OMzPyCfEv4rgnd2orn3jh/zK8EIezxFl4urn8SGU
+zf5LmDhOPQlH0nezPPaWP3NcoYhKmIKRFhGpBahtgWSgD8HXYQyWkYyhjEmO2Cjz
+UIOn9Yw9apRYLihVY+f9Myfh4GkitLOM6keabwVhxU6tu/ol0u+foQ7f9R3EIaEl
+mIKOvaf8YDWFdirddnxsMDZKeG+DIR3vRSg1YLimz+I9WuumVxbrBHaqOvFmUXxf
+AWkBRWbBK19Ln9ug1ohv5JUu8TUmPeSI/kBrcGiUd0mW6bWqtO0W/W+b0Pb1W/yD
+I8wiWCA7Uifvpzyz6eM4oo7nX4pC/k7CM6H/2tcetWT5bF+ro8j3g9WBSCVNYrMy
+oRoNcjYf11GORZcI6ZtrD43WplOVKb1pe4ETih1caSKyCmhuk8odi+QnBeKjMjse
+FQ/QfxRNG6GJG75xTVL9YQzigRTh98vZf5i20HJu8tpFoL918OvOI314tsUuoLQT
+kWs7DbPMDuLllXKAE05pacptQ1uuLlp+s/cu18xa+6TLIMcxj6JewWJ9fF5IAhY3
+3qbpbdPlAqObxbRl81V9mkVdHBIsKFODnQ6em4Vt0TkuJMbRUXOo4IdG3hxf02bS
+aCSbHO0vPlrfpbMjUp68cOnZ12m5CGDnOZedfpGHS0q++1FFPOqtbejpd1QHQIGv
+/bOrxQ+2A436QxWKJRugAK0WsLdQyNjMG2BJ9XP/r1rqOS+HVvTNRRGW/8CJq8Zb
+67T30yzUDy4vqGablEcWzKObpbof8LdjfX6101X4YE0nAgMBAAE=
+-----END PUBLIC KEY-----
+</Public_key>
+  </relays>
+  
+  <relays_truncated>7404</relays_truncated>
+  <bridges_published>2021-11-06 06:50:54</bridges_published>
+  <bridges/>
+  <bridges_truncated>1473</bridges_truncated>
+</root>
