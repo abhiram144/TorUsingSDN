@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <version>8.0</version>
+  <build_revision>0914ec1</build_revision>
+  <relays_published>2021-11-06 07:00:00</relays_published>
+  <relays>
+    <name>seele</name>
+    <fingerprint>000A10D43011EA4928A35F610405F92B4433B4DC</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8081</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIIDIjANBgkqhkiG9w0BAQEFAAOCAw8AMIIDCgKCAwEAl8VD/fwQ9H2lwqU98WJM
+PnDIhFTI/9LpSIb5RlxRt51Vf84UyTmGQXpOK31YJ36ZQYA+a0B0go0duvlXZSrG
+6Hc1cNiB12l3q0RjWZMYa4tYt6/CyGL4aydYh3t8cAfzBSNzqZTtXHKEqHnET+rE
+cEDX3TsO7l/Val8aigLkf7G+kNRBGTxs0xdnX7niy16c639gKbhuOlu7IpqkG9Mk
+0qv4NYFbV3G06M7FdyqCb3Z+wuvRwahKhg4KqgyB268kA9HBZmMkBnpswJ8j9QjS
+ncJz5h875vSvL6pYpcb3OZ888pwp018JsYatOh98ZGYkWZ/Z1bw/i17unia2Xcwp
+AZHtmISTuvQlVZEbn6lfWHxApiqHo7BBWFOzaKEnftFsNJTWhBPUbilr9Zc5lmY9
+afpEFSEUqljhnBAunYFnIkzgA6a3+rZD94scT9JNUtTpyhf7Pmc9g5FO2SCHlkWn
+ofGdz7qq8RoM5uUny8E4WqI1Oh5iUL5NH9Tzf+x1jg91pQPJp2HWKfwvz+sWONDf
+L2pFEVaXJk8mPsfo5+qgUvUqDNGDOoBJJ8lU0dR59mnZSbUGoF/AOPjLQPqsq5lh
+6AOqMpYReBOktCiUNEVuanLsHT48Ox/Kkn6aGhyyi6P6CoDRnRjx0uO4kOcB8FPB
+A0yWFVVXuDtRKHRB0mIkp3oGvTtBSxy3qgvpIDfWtc6OUtCmW6YCxE145oIjBrDp
+3uY/67MQtgqVm1rqdujpIUMPUv2+s96qCzUYbtQrQSigfJOb8Ur7PabWHhjDPca8
+IHw7gsJ2rwp5sUUERz6PmUAx1fqZGeI0jd8Id603Wcmu0rJkE+Q9U2OcBmE3JuU2
+nh37c/oz9UmoeOVmz+8cQMJREM0R/GVw8zkrxNA2xBhWcNJyfIG+1PAeTcIxAcEv
+7JlC4/Mgz6BEU9dwCDHCgi53RSwRMthhsVTzMyegU5lLc36omV34cSPyA219Y1Y7
+0fB6+kJquWKUPwKGX5itu/pF1RJuEYakkehDWbjT9OLTAgMBAAE=
+-----END PUBLIC KEY-----
+    </Public_key>
+  </relays>
+  <relays>
+    <name>CalyxInstitute14</name>
+    <fingerprint>0011BD2485AD45D984EC4159C88FC066E5E3300E</fingerprint>
+    <ip>127.0.1.1</ip>
+    <port>8082</port>
+    <Public_key>
+-----BEGIN PUBLIC KEY-----
+MIIDIjANBgkqhkiG9w0BAQEFAAOCAw8AMIIDCgKCAwEAl8VD/fwQ9H2lwqU98WJM
+PnDIhFTI/9LpSIb5RlxRt51Vf84UyTmGQXpOK31YJ36ZQYA+a0B0go0duvlXZSrG
+6Hc1cNiB12l3q0RjWZMYa4tYt6/CyGL4aydYh3t8cAfzBSNzqZTtXHKEqHnET+rE
+cEDX3TsO7l/Val8aigLkf7G+kNRBGTxs0xdnX7niy16c639gKbhuOlu7IpqkG9Mk
+0qv4NYFbV3G06M7FdyqCb3Z+wuvRwahKhg4KqgyB268kA9HBZmMkBnpswJ8j9QjS
+ncJz5h875vSvL6pYpcb3OZ888pwp018JsYatOh98ZGYkWZ/Z1bw/i17unia2Xcwp
+AZHtmISTuvQlVZEbn6lfWHxApiqHo7BBWFOzaKEnftFsNJTWhBPUbilr9Zc5lmY9
+afpEFSEUqljhnBAunYFnIkzgA6a3+rZD94scT9JNUtTpyhf7Pmc9g5FO2SCHlkWn
+ofGdz7qq8RoM5uUny8E4WqI1Oh5iUL5NH9Tzf+x1jg91pQPJp2HWKfwvz+sWONDf
+L2pFEVaXJk8mPsfo5+qgUvUqDNGDOoBJJ8lU0dR59mnZSbUGoF/AOPjLQPqsq5lh
+6AOqMpYReBOktCiUNEVuanLsHT48Ox/Kkn6aGhyyi6P6CoDRnRjx0uO4kOcB8FPB
+A0yWFVVXuDtRKHRB0mIkp3oGvTtBSxy3qgvpIDfWtc6OUtCmW6YCxE145oIjBrDp
+3uY/67MQtgqVm1rqdujpIUMPUv2+s96qCzUYbtQrQSigfJOb8Ur7PabWHhjDPca8
+IHw7gsJ2rwp5sUUERz6PmUAx1fqZGeI0jd8Id603Wcmu0rJkE+Q9U2OcBmE3JuU2
+nh37c/oz9UmoeOVmz+8cQMJREM0R/GVw8zkrxNA2xBhWcNJyfIG+1PAeTcIxAcEv
+7JlC4/Mgz6BEU9dwCDHCgi53RSwRMthhsVTzMyegU5lLc36omV34cSPyA219Y1Y7
+0fB6+kJquWKUPwKGX5itu/pF1RJuEYakkehDWbjT9OLTAgMBAAE=
+-----END PUBLIC KEY-----
+</Public_key>
+  </relays>
+  
+  <relays_truncated>7404</relays_truncated>
+  <bridges_published>2021-11-06 06:50:54</bridges_published>
+  <bridges/>
+  <bridges_truncated>1473</bridges_truncated>
+</root>

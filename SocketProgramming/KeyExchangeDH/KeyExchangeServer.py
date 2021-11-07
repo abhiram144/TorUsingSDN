@@ -14,7 +14,7 @@ class ThreadedServer(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.host, self.port))
-        self.parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
+        self.parameters = dh.generate_parameters(generator=2, key_size=1024, backend=default_backend())
     def listen(self):
         print("Listening for connections")
         self.sock.listen(5)
@@ -41,6 +41,13 @@ class ThreadedServer(object):
                     private_key = self.parameters.generate_private_key()
                     my_public_key = private_key.public_key()
                     shared_key = private_key.exchange(peer_public_key)
+                    derived_key = HKDF(
+                        algorithm=hashes.SHA256(),
+                        length=32,
+                        salt=None,
+                        info=b'handshake data',
+                        backend=default_backend()
+                    ).derive(shared_key)
                     pem = my_public_key.public_bytes(
                         encoding=serialization.Encoding.PEM,
                         format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -50,6 +57,7 @@ class ThreadedServer(object):
                         shared_key,
                         backend=default_backend()
                     )
+
                 else:
                     raise Exception('Client disconnected')
             except Exception as e:

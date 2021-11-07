@@ -8,8 +8,9 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 # Generate some parameters. These can be reused.
 parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
+parameters2 = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
 # Generate a private key for use in the exchange.
-server_private_key = parameters.generate_private_key()
+server_private_key = parameters2.generate_private_key()
 # In a real handshake the peer is a remote client. For this
 # example we'll generate another local private key though. Note that in
 # a DH handshake both peers must agree on a common set of parameters.

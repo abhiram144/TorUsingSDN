@@ -94,19 +94,20 @@ class TorServer:
                         client_pubkey_serial,
                         backend=default_backend()
                     )
-            parameters = dh.generate_parameters(generator=decrypted_payload["Key_Generator"], key_size=decrypted_payload["Key_length"], backend=default_backend())
+            p = packetJson["Parameters"]["p"]
+            g = packetJson["Parameters"]["g"]
+            parameters = dh.DHParameterNumbers(p, g).parameters()
             #self.SessionUidLookUps[packet.SessionId] = decryptId
             private_key = parameters.generate_private_key()
             my_public_key = private_key.public_key()
-            #shared_key = private_key.exchange(client_pubkey)
-            # derived_key = HKDF(
-            #         algorithm=hashes.SHA256(),
-            #         length=32,
-            #         salt=None,
-            #         info=b'handshake data',
-            #         backend=default_backend()
-            #     ).derive(shared_key)
-            derived_key = b"h"*32
+            shared_key = private_key.exchange(client_pubkey)
+            derived_key = HKDF(
+                    algorithm=hashes.SHA256(),
+                    length=32,
+                    salt=None,
+                    info=b'handshake data',
+                    backend=default_backend()
+                ).derive(shared_key)
             pem = my_public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -114,7 +115,7 @@ class TorServer:
             self.SessionUidLookUps[packet.SessionId] = ClientDetails(decryptId, derived_key, parameters)
             #encryptedData = Crypt.SymmetricCrypto.Encrypt(decryptId, b"Test", derived_key)
             packet = Tor.TorPacket(None, None, packet.SessionId)
-            packet.Payload = {"PublicKey" : pem, "UId" : decryptId, "Test" : derived_key}
+            packet.Payload = {"PublicKey" : pem, "UId" : decryptId}
             return pickle.dumps(packet)
         
         
@@ -133,7 +134,7 @@ class TorServer:
                 return encrypted_data
             except Exception as e:
                 print(e)
-                return str(e)
+                return b""
 
         elif(packet.ReqType == Tor.TorActions.Browse):
             try:
@@ -151,7 +152,7 @@ class TorServer:
                 return dataRecv
             except Exception as e:
                 print(e)
-                return str(e)
+                return b""
             
 
 
