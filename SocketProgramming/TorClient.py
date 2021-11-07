@@ -70,7 +70,7 @@ class TorSession:
             dh_private_key = Crypto.SymmetricCrypto.GeneratePrivateKey(self.parameters)
             dh_public_key_serial = Crypto.RSACryptography.SerializePublicKey(dh_private_key.public_key())
 
-            SerializePublicKey = Crypto.RSACryptography.SerializePublicKey(self.Rsa.public_key())
+            
             message = { "GenPublicKey" : dh_public_key_serial, "Key_Generator" : keyGenerator, "Key_length" : Sym_KeyLen}
             preparedPacket = self.PrepareForwardingPacket(currentRelayNodes, message, Tor.TorActions.EstablishSymKey)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

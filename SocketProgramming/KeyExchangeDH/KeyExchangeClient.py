@@ -13,7 +13,7 @@ HOST = '127.0.0.1'  # The server's hostname or IP address
 PORT = 65432        # The port used by the server
 parameters = dh.generate_parameters(generator=2, key_size=2048, backend=default_backend())
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    #s.connect((HOST, PORT))
+    s.connect((HOST, PORT))
     # Generate some parameters. These can be reused.
     # Generate a private key for use in the exchange.
     private_key = parameters.generate_private_key()

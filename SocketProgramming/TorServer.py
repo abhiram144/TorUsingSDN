@@ -65,16 +65,16 @@ class TorServer:
             encData = packet.Payload
             serialDecrypted = Crypt.RSACryptography.DecryptMessage(encData, self.private_key)
             decrypted_payload = pickle.loads(serialDecrypted)
-            client_pubkey = decrypted_payload["GenPublicKey"]
-            peer_public_key = serialization.load_pem_public_key(
-                        client_pubkey,
+            client_pubkey_serial = decrypted_payload["GenPublicKey"]
+            client_pubkey = serialization.load_pem_public_key(
+                        client_pubkey_serial,
                         backend=default_backend()
                     )
             parameters = dh.generate_parameters(generator=decrypted_payload["Key_Generator"], key_size=decrypted_payload["Key_length"], backend=default_backend())
             #self.SessionUidLookUps[packet.SessionId] = decryptId
             private_key = parameters.generate_private_key()
             my_public_key = private_key.public_key()
-            shared_key = private_key.exchange(peer_public_key)
+            shared_key = private_key.exchange(client_pubkey)
             derived_key = HKDF(
                     algorithm=hashes.SHA256(),
                     length=32,
@@ -87,9 +87,9 @@ class TorServer:
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
             )
             self.SessionUidLookUps[packet.SessionId] = ClientDetails(decryptId, derived_key, parameters)
-            encryptedData = Crypt.SymmetricCrypto.Encrypt(decryptId, "Test", derived_key)
+            #encryptedData = Crypt.SymmetricCrypto.Encrypt(decryptId, b"Test", derived_key)
             packet = Tor.TorPacket(None, None, packet.SessionId)
-            packet.Payload = {"PublicKey" : pem, "UId" : decryptId, "Test" : encryptedData}
+            packet.Payload = {"PublicKey" : pem, "UId" : decryptId, "Test" : derived_key}
             return pickle.dumps(packet)
         else:
             pass
