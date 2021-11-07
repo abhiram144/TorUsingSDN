@@ -10,6 +10,7 @@ import pickle
 import TorHelper as Tor
 import os
 import sys
+import urllib.request
 
 class ClientDetails:
     def __init__(self, UId, Key, parameters) -> None:
@@ -57,7 +58,7 @@ class TorServer:
 
     def listenToClient(self, client, address):
         size = 1024
-        print("Client Connected")
+        print(f"Client - {address} : Connected")
         while True:
             try:
                 data = recvall(client)
@@ -73,12 +74,21 @@ class TorServer:
                 client.close()
                 return False    
     
-    def handle_connection(self, packet):
+    def handle_connection(self, packetJson):
+        packet = packetJson["Data"]
+        try:
+            sessionId = packetJson["SessionId"]
+            symmetric_key = self.SessionUidLookUps[sessionId].Key
+            nonce = self.SessionUidLookUps[sessionId].UId
+            serialDecrypted = Crypt.SymmetricCrypto.Decrypt(nonce, packet, symmetric_key)
+            packet = pickle.loads(serialDecrypted)
+        except Exception as e:
+            decrypted = Crypt.RSACryptography.DecryptMessage(packet, self.private_key)
+            packet = pickle.loads(decrypted)
+
         if(packet.ReqType == Tor.TorActions.EstablishSymKey):
             decryptId = os.urandom(16)
-            encData = packet.Payload
-            serialDecrypted = Crypt.RSACryptography.DecryptMessage(encData, self.private_key)
-            decrypted_payload = pickle.loads(serialDecrypted)
+            decrypted_payload = packet.Payload
             client_pubkey_serial = decrypted_payload["GenPublicKey"]
             client_pubkey = serialization.load_pem_public_key(
                         client_pubkey_serial,
@@ -88,14 +98,15 @@ class TorServer:
             #self.SessionUidLookUps[packet.SessionId] = decryptId
             private_key = parameters.generate_private_key()
             my_public_key = private_key.public_key()
-            shared_key = private_key.exchange(client_pubkey)
-            derived_key = HKDF(
-                    algorithm=hashes.SHA256(),
-                    length=32,
-                    salt=None,
-                    info=b'handshake data',
-                    backend=default_backend()
-                ).derive(shared_key)
+            #shared_key = private_key.exchange(client_pubkey)
+            # derived_key = HKDF(
+            #         algorithm=hashes.SHA256(),
+            #         length=32,
+            #         salt=None,
+            #         info=b'handshake data',
+            #         backend=default_backend()
+            #     ).derive(shared_key)
+            derived_key = b"h"*32
             pem = my_public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -105,23 +116,44 @@ class TorServer:
             packet = Tor.TorPacket(None, None, packet.SessionId)
             packet.Payload = {"PublicKey" : pem, "UId" : decryptId, "Test" : derived_key}
             return pickle.dumps(packet)
+        
+        
         elif(packet.ReqType == Tor.TorActions.Forward):
-            encData = packet.Payload
             symmetric_key = self.SessionUidLookUps[packet.SessionId].Key
             nonce = self.SessionUidLookUps[packet.SessionId].UId
-            serialDecrypted = Crypt.SymmetricCrypto.Decrypt(nonce, encData, symmetric_key)
-            decrypted_payload = pickle.loads(serialDecrypted)
+            serial_payload = pickle.dumps({"Data" : packet.Payload, "SessionId" : packet.SessionId})
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as forward:
-                    HOST = decrypted_payload.ip
-                    PORT = int(decrypted_payload.port)
+                    HOST = packet.Dst
+                    PORT = int(packet.DstPort)
                     forward.connect((HOST, PORT))
-                    forward.sendall(pickle.dumps(decrypted_payload.Payload))
+                    forward.sendall(serial_payload)
                     dataRecv = recvall(forward)
                 encrypted_data = Crypt.SymmetricCrypto.Encrypt(nonce, dataRecv, symmetric_key)
                 return encrypted_data
             except Exception as e:
                 print(e)
+                return str(e)
+
+        elif(packet.ReqType == Tor.TorActions.Browse):
+            try:
+                # open a connection to a URL using urllib
+                url = packet.Payload["url"]
+                webUrl  = urllib.request.urlopen(url)
+
+                #get the result code and print it
+                print (f"url : {url} - result code: {str(webUrl.getcode())}")
+                symmetric_key = self.SessionUidLookUps[packet.SessionId].Key
+                nonce = self.SessionUidLookUps[packet.SessionId].UId
+                # read the data from the URL and print it
+                dataRecv = webUrl.read()
+                encrypted_data = Crypt.SymmetricCrypto.Encrypt(nonce, dataRecv, symmetric_key)
+                return dataRecv
+            except Exception as e:
+                print(e)
+                return str(e)
+            
+
 
 if __name__ == "__main__":
     port = int(sys.argv[1])

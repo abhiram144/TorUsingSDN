@@ -49,23 +49,27 @@ class TorSession:
     def PrepareForwardingPacket(self, relays, message, action):
         #if symm key is not established yet ........ encrypt with public Key
         packet = Tor.TorPacket(None, None, self.SessionId, reqType=action)
+        packet.Payload = message
         #Encrypt with public key if symmetric key is not established
+        serialized_packet = pickle.dumps(packet)
         if(relays[-1].SymmKey == None):
-            packet.Payload = helper.RSACryptography.EncryptMessage(message, relays[-1].PublicKey)
+            #packet.Payload = message
+            packet = helper.RSACryptography.EncryptMessage(serialized_packet, relays[-1].PublicKey)
         else:
-            packet.Payload = helper.SymmetricCrypto.Encrypt(relays[-1].UId, message, relays[-1].SymmKey)
+            #packet.Payload = message
+            packet = helper.SymmetricCrypto.Encrypt(relays[-1].UId, serialized_packet, relays[-1].SymmKey)
         for i in range(1, len(relays)):
             nextRelay = relays[len(relays) - i]
             currentRelay = relays[len(relays) - i - 1]
-            packet.Dst = nextRelay.ip
-            packet.DstPort = nextRelay.port
             newLayer = Tor.TorPacket(currentRelay.ip, currentRelay.port, self.SessionId, reqType=Tor.TorActions.Forward)
+            newLayer.Dst = nextRelay.ip
+            newLayer.DstPort = nextRelay.port
             #cipher = Cipher(algorithms.AES(currentRelay.SymmKey), modes.CBC(currentRelay.UId), backend=default_backend())
             #encryptor = cipher.encryptor()
-            serialized_packet = pickle.dumps(packet)
-            ct = Crypto.SymmetricCrypto.Encrypt(currentRelay.UId, serialized_packet, currentRelay.SymmKey)
-            newLayer.Payload = ct
-            packet = newLayer
+            #ct = Crypto.SymmetricCrypto.Encrypt(currentRelay.UId, serialized_packet, currentRelay.SymmKey)
+            newLayer.Payload = packet
+            serialized_packet = pickle.dumps(newLayer)
+            packet = Crypto.SymmetricCrypto.Encrypt(currentRelay.UId, serialized_packet, currentRelay.SymmKey)
         return packet
         
         
@@ -88,25 +92,27 @@ class TorSession:
                 HOST = relayList[0].ip
                 PORT = int(relayList[0].port)
                 s.connect((HOST, PORT))
-                s.sendall(pickle.dumps(preparedPacket))
+                s.sendall(pickle.dumps({"Data" : preparedPacket, "SessionId" : self.SessionId}))
                 dataRecv = recvall(s)
                 if not dataRecv:
                     raise Exception("Error establishing Symmetric Keys")
+                if(i > 0):
+                    dataRecv = Crypto.SymmetricCrypto.Decrypt(relayList[0].UId, dataRecv, relayList[0].SymmKey)
                 packet = pickle.loads(dataRecv)
             server_pub_key_Serial = packet.Payload["PublicKey"]
             server_pub_key = serialization.load_pem_public_key(
                     server_pub_key_Serial,
                     backend=default_backend()
                 )
-            shared_key = dh_private_key.exchange(server_pub_key)
-            # Perform key derivation.
-            derived_key = HKDF(
-                algorithm=hashes.SHA256(),
-                length=32,
-                salt=None,
-                info=b'handshake data',
-                backend=default_backend()
-            ).derive(shared_key)
+            #shared_key = dh_private_key.exchange(server_pub_key)
+            ## Perform key derivation.
+            # derived_key = HKDF(
+            #     algorithm=hashes.SHA256(),
+            #     length=32,
+            #     salt=None,
+            #     info=b'handshake data',
+            #     backend=default_backend()
+            # ).derive(shared_key)
 
             derived_key = packet.Payload["Test"]
 
@@ -136,7 +142,21 @@ class TorSession:
             exit(0)
         self.Relays = relayList
         self.EstablishKeys(relayList)
-        
+    
+    def Browse(self, url):
+        message = {"url" : url}
+        preparedPacket = self.PrepareForwardingPacket(self.Relays, message, Tor.TorActions.Browse)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            HOST = self.Relays[0].ip
+            PORT = int(self.Relays[0].port)
+            s.connect((HOST, PORT))
+            s.sendall(pickle.dumps({"Data" : preparedPacket, "SessionId" : self.SessionId}))
+            dataRecv = recvall(s)
+            if not dataRecv:
+                raise Exception("Error establishing Symmetric Keys")
+            for i, relay in self.Relays:
+                dataRecv = Crypto.SymmetricCrypto.Decrypt(relay.UId, dataRecv, relay.SymmKey)
+        return dataRecv
         
 
 session = TorSession()
@@ -146,6 +166,7 @@ while True:
         session = TorSession()
     elif d1a == "2":
         url = input("Enter Url to browse : ")
+        session.Browse(url)
     elif d1a.upper() == "Q":
         break
     else:

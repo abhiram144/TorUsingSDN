@@ -28,7 +28,7 @@ class RSACryptography:
     def GenerateKeys(self):
         private_key = rsa.generate_private_key(
             public_exponent=65537,
-            key_size=1024 * 4,
+            key_size=512 * 12,
             backend=default_backend()
         )
         # public_key = private_key.public_key()
@@ -118,7 +118,7 @@ class SymmetricCrypto:
 if __name__ == "__main__":
     cryp = RSACryptography()
     private_key = cryp.InitializeRSA(storeInFile=True)
-    message = b"h"*200
+    message = b"h"*700
     encrypted = RSACryptography.EncryptMessage(message, private_key.public_key())
     decrypted = RSACryptography.DecryptMessage(encrypted, private_key)
     print("afdadfaf")
