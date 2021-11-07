@@ -31,8 +31,8 @@ same_derived_key = HKDF(
 ).derive(same_shared_key)
 
 iv = os.urandom(16)
-cipher = Cipher(algorithms.AES(same_derived_key), modes.CBC(iv), backend=default_backend())
+cipher = Cipher(algorithms.AES(same_derived_key), modes.CBC(iv), backend=default_backend(),)
 encryptor = cipher.encryptor()
-ct = encryptor.update(b"a"*100) + encryptor.finalize()
+ct = encryptor.update(b"a"*691) + encryptor.finalize()
 decryptor = cipher.decryptor()
 msg = decryptor.update(ct) + decryptor.finalize()

@@ -44,16 +44,18 @@ class TorSession:
         if(relays[-1].SymmKey == None):
             packet.Payload = helper.RSACryptography.EncryptMessage(message, relays[-1].PublicKey)
         else:
-            packet.Payload = helper.SymmetricCrypto.Encrypt(relays[-1].Uid, message, relays[-1].SymmKey)
+            packet.Payload = helper.SymmetricCrypto.Encrypt(relays[-1].UId, message, relays[-1].SymmKey)
         for i in range(1, len(relays)):
             nextRelay = relays[len(relays) - i]
             currentRelay = relays[len(relays) - i - 1]
-            newLayer = Tor.TorPacket(nextRelay.ip, nextRelay.port, self.SessionId, reqType=Tor.TorActions.Forward)
-            cipher = Cipher(algorithms.AES(currentRelay.SymmKey), modes.CBC(currentRelay.Uid), backend=default_backend())
-            encryptor = cipher.encryptor()
+            packet.Dst = nextRelay.ip
+            packet.DstPort = nextRelay.port
+            newLayer = Tor.TorPacket(currentRelay.ip, currentRelay.port, self.SessionId, reqType=Tor.TorActions.Forward)
+            #cipher = Cipher(algorithms.AES(currentRelay.SymmKey), modes.CBC(currentRelay.UId), backend=default_backend())
+            #encryptor = cipher.encryptor()
             serialized_packet = pickle.dumps(packet)
-            ct = encryptor.update(serialized_packet) + encryptor.finalize()
-            newLayer.Payload = packet
+            ct = Crypto.SymmetricCrypto.Encrypt(currentRelay.UId, serialized_packet, currentRelay.SymmKey)
+            newLayer.Payload = ct
             packet = newLayer
         return packet
         
@@ -74,8 +76,8 @@ class TorSession:
             message = { "GenPublicKey" : dh_public_key_serial, "Key_Generator" : keyGenerator, "Key_length" : Sym_KeyLen}
             preparedPacket = self.PrepareForwardingPacket(currentRelayNodes, message, Tor.TorActions.EstablishSymKey)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                HOST = relay.ip
-                PORT = int(relay.port)
+                HOST = relayList[0].ip
+                PORT = int(relayList[0].port)
                 s.connect((HOST, PORT))
                 s.sendall(pickle.dumps(preparedPacket))
                 dataRecv = s.recv(1024)
@@ -96,8 +98,11 @@ class TorSession:
                 info=b'handshake data',
                 backend=default_backend()
             ).derive(shared_key)
+
+            derived_key = packet.Payload["Test"]
+
             relay.SymmKey = derived_key
-            relay.UId = Crypto.SymmetricCrypto.Decrypt(packet.Payload["UId"], packet.Payload["Test"], relay.SymmKey)
+            relay.UId = packet.Payload["UId"]#Crypto.SymmetricCrypto.Decrypt(packet.Payload["UId"], packet.Payload["Test"], relay.SymmKey)
             
 
     

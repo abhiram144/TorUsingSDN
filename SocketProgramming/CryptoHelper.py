@@ -103,12 +103,12 @@ class SymmetricCrypto:
 
 
     def Encrypt(nonce, message, symmetric_key):
-        cipher = Cipher(algorithms.AES(symmetric_key), modes.CBC(nonce), backend=default_backend())
+        cipher = Cipher(algorithms.AES(symmetric_key), modes.CTR(nonce), backend=default_backend())
         encryptor = cipher.encryptor()
         ct = encryptor.update(message) + encryptor.finalize()
         return ct
     def Decrypt(nonce, message, symmetric_key):
-        cipher = Cipher(algorithms.AES(symmetric_key), modes.CBC(nonce), backend=default_backend())
+        cipher = Cipher(algorithms.AES(symmetric_key), modes.CTR(nonce), backend=default_backend())
         decryptor = cipher.decryptor()
         msg = decryptor.update(message) + decryptor.finalize()
         return msg

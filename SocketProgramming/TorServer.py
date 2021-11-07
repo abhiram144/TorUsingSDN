@@ -9,12 +9,24 @@ import threading
 import pickle
 import TorHelper as Tor
 import os
+import sys
 
 class ClientDetails:
     def __init__(self, UId, Key, parameters) -> None:
         self.UId = UId
         self.Key = Key
         self.parameters = parameters
+
+def recvall(sock):
+    BUFF_SIZE = 4096 # 4 KiB
+    data = b''
+    while True:
+        part = sock.recv(BUFF_SIZE)
+        data += part
+        if len(part) < BUFF_SIZE:
+            # either 0 or end of data
+            break
+    return data
 
 class TorServer:
     def __init__(self, port):
@@ -41,12 +53,15 @@ class TorServer:
             client.settimeout(60)
             threading.Thread(target = self.listenToClient,args = (client,address)).start()
 
+    
+
     def listenToClient(self, client, address):
         size = 1024
         print("Client Connected")
         while True:
+            byteArr = bytearray()
             try:
-                data = client.recv(size)
+                data = recvall(client)
                 if data:
                     packet = pickle.loads(data)
                     response = self.handle_connection(packet)
@@ -91,9 +106,25 @@ class TorServer:
             packet = Tor.TorPacket(None, None, packet.SessionId)
             packet.Payload = {"PublicKey" : pem, "UId" : decryptId, "Test" : derived_key}
             return pickle.dumps(packet)
-        else:
+        elif(packet.ReqType == Tor.TorActions.Forward):
+            encData = packet.Payload
+            symmetric_key = self.SessionUidLookUps[packet.SessionId].Key
+            nonce = self.SessionUidLookUps[packet.SessionId].UId
+            serialDecrypted = Crypt.SymmetricCrypto.Decrypt(nonce, encData, symmetric_key)
+            decrypted_payload = pickle.loads(serialDecrypted)
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    HOST = decrypted_payload.ip
+                    PORT = int(decrypted_payload.port)
+                    s.connect((HOST, PORT))
+                    s.sendall(pickle.dumps(decrypted_payload.Payload))
+                    dataRecv = recvall(s)
+            except Exception as e:
+                print(e)
+
             pass
 
 if __name__ == "__main__":
-    server = TorServer(8081)
+    port = int(sys.argv[1])
+    server = TorServer(port)
     server.StartListening()
