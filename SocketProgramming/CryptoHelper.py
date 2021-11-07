@@ -13,7 +13,7 @@ class RSACryptography:
         if(not readFromFile):
             private_key = self.GenerateKeys()
         else:
-            self.ReadKeys()
+            private_key = self.ReadKeys()
         
         if(storeInFile):
             self.StoreKeysInFiles(private_key)
@@ -68,14 +68,7 @@ class RSACryptography:
                 password=None,
                 backend=default_backend()
             )
-        with open("public_key.pem", "rb") as key_file:
-            public_key = serialization.load_pem_public_key(
-                key_file.read(),
-                backend=default_backend()
-            )
-        self.private_key = private_key
-        self.public_key = public_key
-        return private_key, public_key
+        return private_key
     
     def EncryptMessage(message, public_key):
         if(not isinstance(message, (bytes, bytearray))):

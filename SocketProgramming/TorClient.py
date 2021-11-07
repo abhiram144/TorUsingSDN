@@ -23,7 +23,7 @@ class Relays:
         self.port = None
         self.SymmKey = None
         self.PublicKey = None
-        self.Uid = None
+        self.UId = None
 
 
 class TorSession:
@@ -66,25 +66,39 @@ class TorSession:
         currentRelayNodes = []
         for i, relay in enumerate(relayList):
             currentRelayNodes.append(relay)
-            relay.Uid = os.urandom(16)
+            #relay.Uid = os.urandom(16)
             dh_private_key = Crypto.SymmetricCrypto.GeneratePrivateKey(self.parameters)
             dh_public_key_serial = Crypto.RSACryptography.SerializePublicKey(dh_private_key.public_key())
 
             SerializePublicKey = Crypto.RSACryptography.SerializePublicKey(self.Rsa.public_key())
-            message = {"UID" : relay.Uid, "GenPublicKey" : dh_public_key_serial, "Key_Generator" : keyGenerator, "Key_length" : Sym_KeyLen}
+            message = { "GenPublicKey" : dh_public_key_serial, "Key_Generator" : keyGenerator, "Key_length" : Sym_KeyLen}
             preparedPacket = self.PrepareForwardingPacket(currentRelayNodes, message, Tor.TorActions.EstablishSymKey)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 HOST = relay.ip
                 PORT = int(relay.port)
                 s.connect((HOST, PORT))
                 s.sendall(pickle.dumps(preparedPacket))
-                data = bytearray()
-                datanew = s.recv(1024)
-                if not datanew:
+                dataRecv = s.recv(1024)
+                if not dataRecv:
                     raise Exception("Error establishing Symmetric Keys")
-                data.extend(datanew)
-            dataReceived = bytes(data)
-            print(dataReceived)
+                packet = pickle.loads(dataRecv)
+            server_pub_key_Serial = packet.Payload["PublicKey"]
+            server_pub_key = serialization.load_pem_public_key(
+                    server_pub_key_Serial,
+                    backend=default_backend()
+                )
+            shared_key = dh_private_key.exchange(server_pub_key)
+            # Perform key derivation.
+            derived_key = HKDF(
+                algorithm=hashes.SHA256(),
+                length=32,
+                salt=None,
+                info=b'handshake data',
+                backend=default_backend()
+            ).derive(shared_key)
+            relay.SymmKey = derived_key
+            relay.UId = Crypto.SymmetricCrypto.Decrypt(packet.Payload["UId"], packet.Payload["Test"], relay.SymmKey)
+            
 
     
 
