@@ -59,7 +59,6 @@ class TorServer:
         size = 1024
         print("Client Connected")
         while True:
-            byteArr = bytearray()
             try:
                 data = recvall(client)
                 if data:
@@ -113,16 +112,16 @@ class TorServer:
             serialDecrypted = Crypt.SymmetricCrypto.Decrypt(nonce, encData, symmetric_key)
             decrypted_payload = pickle.loads(serialDecrypted)
             try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as forward:
                     HOST = decrypted_payload.ip
                     PORT = int(decrypted_payload.port)
-                    s.connect((HOST, PORT))
-                    s.sendall(pickle.dumps(decrypted_payload.Payload))
-                    dataRecv = recvall(s)
+                    forward.connect((HOST, PORT))
+                    forward.sendall(pickle.dumps(decrypted_payload.Payload))
+                    dataRecv = recvall(forward)
+                encrypted_data = Crypt.SymmetricCrypto.Encrypt(nonce, dataRecv, symmetric_key)
+                return encrypted_data
             except Exception as e:
                 print(e)
-
-            pass
 
 if __name__ == "__main__":
     port = int(sys.argv[1])
